@@ -1,20 +1,61 @@
 # Set up the prompt
 
 
-alias subl=/opt/SublimeText2/sublime_text
+alias ll="ls -lgG"
+
+MANPATH=$MATHPATH:/usr/local/opt/erlang/lib/erlang/man
+MAHPATH=$MANPATH:/usr/local/Cellar
+
+alias grep="grep --color=auto"
+alias egrep="egrep --color=auto"
+
+
+bindkey ^R history-incremental-search-backward
+
+# alias mvn=/usr/local/Cellar/maven/3.1.1/bin/mvn
+#
+# alias mysql=/usr/local/Cellar/mysql/5.6.15/bin/mysql
+
+# drawbridge
+export JAVA_HOME=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+
+
+# so I can use ggrep :)
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH:/usr/local/Cellar
+export PATH=$PATH:/Users/lee/bin
 
 
 export SBT_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=4000,server=y,suspend=n"
 
 
+function ads_ssh() { ssh -i ~/.ssh/key-adsymp adsymp@"$1"; }
+
+
+
+unsetopt beep
+
 
 function prompt_char {
-   git branch >/dev/null 2>/dev/null && git branch | grep "\*.*" | sed -e 's/^..//' && return
+   br=`git branch >/dev/null 2>/dev/null && git branch | grep "\*.*" | sed -e 's/^..//' && return`
+   case "$br" in
+      "")
+         echo ""
+         ;;
+      *)
+         echo "on $fg[blue]$br$reset_color"
+         ;;
+   esac
+   return
 }
 
 function nice_pwd {
  # pwd | sed 's/\([a-z]\)[a-z]*\//\1\//gi'
  pwd | sed 's/\([^\\/]\)[^\\/]*\//\1\//gi'
+}
+
+function gen_jvm_project {
+   mkdir -p src/main/$1
+   mkdir -p src/test/$1
 
 }
 
@@ -22,11 +63,18 @@ function nice_pwd {
 autoload -Uz promptinit 
 autoload -U colors && colors
 promptinit
+setopt prompt_subst
 
 
 # PROMPT="$fg[green]%n$reset_color at $fg[red]%m $reset_color %U%B(%d)%b%u $ "
-PROMPT="$fg[green]%n$reset_color at $fg[red]%m $reset_color %U%B(%d)%b%u 
-$ "
+# PROMPT="$fg[green]%n$reset_color at $fg[red]%m $reset_color %U%B(%d)%b%u 
+# $ "
+
+
+
+
+PS1='$fg[green]%n$reset_color at $fg[red]%m $reset_color %U%B(%d)%b%u $(prompt_char)
+$ '
 
 
 # PROMPT="$fg[green]%n$reset_color at $fg[red]%m $reset_color %U%B(${nice_pwd})%b%u 
@@ -56,7 +104,7 @@ zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' menu select=2
-eval "$(dircolors -b)"
+# eval "$(dircolors -b)"
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
