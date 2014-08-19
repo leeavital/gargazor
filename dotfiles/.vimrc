@@ -59,6 +59,8 @@ set cc=80
 " aspectJ
 au BufNewFile,BufRead *.aj set filetype=java
 
+au BufNewFile,BufRead *.sbt set filetype=scala
+
 
 execute pathogen#infect()
 filetype plugin indent on
