@@ -22,4 +22,8 @@
 [push]
 	default = simple
 [pull]
-	rebase = true
+  rebase = true
+
+
+[remote "origin"]
+  fetch = +refs/heads/*:refs/remotes/origin/*
