@@ -1,7 +1,7 @@
 # Set up the prompt
 
 
-alias ll="ls -lgG"
+alias ll="ls -lagG"
 
 MANPATH=$MATHPATH:/usr/local/opt/erlang/lib/erlang/man
 MAHPATH=$MANPATH:/usr/local/Cellar
