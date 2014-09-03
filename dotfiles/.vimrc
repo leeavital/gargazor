@@ -96,3 +96,21 @@ set foldmethod=syntax
 set foldlevelstart=100
 
 
+
+" alt- ] to vsplit a definition
+map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+filetype plugin on
+
+" search up the tree for tags
+set tags=./tags;/
+
+
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+
+
+" Show trailing whitespace:
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+
+
