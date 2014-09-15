@@ -17,7 +17,7 @@ bindkey ^R history-incremental-search-backward
 # alias mysql=/usr/local/Cellar/mysql/5.6.15/bin/mysql
 
 # drawbridge
-export JAVA_HOME=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+# export JAVA_HOME=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
 
 
 # so I can use ggrep :)
@@ -100,6 +100,19 @@ autoload -Uz compinit
 compinit
 
 zstyle ':completion:*' auto-description 'specify: %d'
+
+
+
+
+ffs (){
+  find . | egrep -i "$@"
+}
+
+
+
+
+
+
 zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
