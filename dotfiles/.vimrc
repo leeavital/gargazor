@@ -113,4 +113,6 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 
-
+noremap tn  :tabnext<Space>
+noremap tp  :tabprev<Space>
+noremap ts  :tab split<Space>
