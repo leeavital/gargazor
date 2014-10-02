@@ -10,7 +10,8 @@ alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
 
 
-bindkey ^R history-incremental-search-backward
+set -o vi
+bindkey "^R" history-incremental-search-backward
 
 # alias mvn=/usr/local/Cellar/maven/3.1.1/bin/mvn
 #
@@ -82,10 +83,6 @@ $ '
 
 
 setopt histignorealldups sharehistory
-
-# Use emacs keybindings even if our EDITOR is set to vi
-bindkey -e
-
 
 set -o vi
 
