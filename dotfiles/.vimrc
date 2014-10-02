@@ -62,6 +62,12 @@ au BufNewFile,BufRead *.aj set filetype=java
 au BufNewFile,BufRead *.sbt set filetype=scala
 
 
+" JSON
+au BufNewFile, BufRead *.json set filetype=js
+
+
+filetype plugin on
+
 execute pathogen#infect()
 filetype plugin indent on
 
@@ -83,6 +89,11 @@ endfunction
 
 fun! HtmlPretty()
    execute '%!js-beautify --type html -s 2 -f -'
+endfun
+
+fun! DeDupWs()
+  " de-duplicate white space
+  execute "%!cat -s"
 endfun
 
 " press f8 to open tagbar
