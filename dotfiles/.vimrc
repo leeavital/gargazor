@@ -11,8 +11,6 @@ set nocompatible
 set noerrorbells
 set novisualbell
 set vb t_vb=
-
-" when searching, only think about case when the
 " pattern has an upper case letter
 set ignorecase
 set smartcase
@@ -102,3 +100,10 @@ match ExtraWhitespace /\s\+$/
 noremap tn  :tabnext<CR>
 noremap tp  :tabprev<CR>
 noremap ts  :tab split<CR>
+
+" ignore stuff for ctrl-p
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.yardoc\|public$|log\|tmp$',
+  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
+  \ }
+
