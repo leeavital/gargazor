@@ -12,9 +12,7 @@ set noerrorbells
 set novisualbell
 set vb t_vb=
 
-
-
-" when searching, only think about case when the 
+" when searching, only think about case when the
 " pattern has an upper case letter
 set ignorecase
 set smartcase
@@ -23,36 +21,28 @@ set smartcase
 set wildmenu
 set wildmode=list:longest,full
 
-
 set smarttab
 
 set number
 
-
 " highlight search results
 set hlsearch
-
 
 " nowrap
 set nowrap
 
-
 set cursorline
-
 
 colorscheme peachpuff
 
 nore ; :
 nore , ;
 
-
 " useful when editing partial tex files
 " http://tex.stackexchange.com/questions/55397/vim-syntax-highlighting-of-partial-tex-file-used-with-include-is-incorrect
 let g:tex_flavor = "latex"
 
 syntax on
-
-
 
 set cc=80
 
@@ -61,14 +51,11 @@ au BufNewFile,BufRead *.aj set filetype=java
 
 au BufNewFile,BufRead *.sbt set filetype=scala
 
-
 " JSON
 au BufNewFile, BufRead *.json set filetype=js
 
-
-filetype plugin on
-
 execute pathogen#infect()
+filetype plugin on
 filetype plugin indent on
 
 set ruler
@@ -76,10 +63,7 @@ set ruler
 autocmd InsertEnter * :set number
 autocmd InsertLeave * :set relativenumber
 
-
 au BufRead *.coffee set filetype=coffee
-
-
 
 fun! JsPretty()
    "let lineNo = getline(".")
@@ -102,23 +86,14 @@ nmap <F8> :TagbarToggle<CR>
 " open tagbar when supported
 " autocmd VimEnter * nested :call tagbar#autoopen(1)
 
-
 set foldmethod=syntax
 set foldlevelstart=100
-
-
 
 " alt- ] to vsplit a definition
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
-filetype plugin on
-
 " search up the tree for tags
 set tags=./tags;/
-
-
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-
 
 " Show trailing whitespace:
 highlight ExtraWhitespace ctermbg=red guibg=red
