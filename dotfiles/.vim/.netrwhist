@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/Users/lavital/workspace/peacock/spec/javascripts/views/cards'
+let g:netrw_dirhist_2='/Users/lavital/workspace/peacock/spec/javascripts/views'
+let g:netrw_dirhist_3='/Users/lee/.vim/bundle/vim-javascript'
+let g:netrw_dirhist_4='/Users/lee/gargazor/dotfiles/.vim'
