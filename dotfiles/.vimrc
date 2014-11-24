@@ -107,3 +107,6 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\.so$\|\.dat$|\.DS_Store$'
   \ }
 
+" get airline to show up. Not sure why this is necessary
+" https://github.com/bling/vim-airline/wiki/FAQ
+set laststatus=2

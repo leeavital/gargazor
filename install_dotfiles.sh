@@ -17,3 +17,9 @@ do
    fi
 
 done
+
+
+# symlinks for neovim
+echo "Symlinking neovim config"
+ln -s ~/.vim ~/.nvim
+ln -s ~/.vimrc ~/.nvimrc
