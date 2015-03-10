@@ -4,6 +4,9 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 
+set tw=0
+colorscheme github
+
 set smartindent
 
 set nocompatible
@@ -31,7 +34,6 @@ set nowrap
 
 set cursorline
 
-colorscheme peachpuff
 
 nore ; :
 nore , ;
