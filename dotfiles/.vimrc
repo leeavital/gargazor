@@ -4,8 +4,10 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 
-set tw=0
 colorscheme github
+" prevent that pesky auto line breaking
+
+set textwidth=0
 
 set smartindent
 
@@ -44,7 +46,7 @@ let g:tex_flavor = "latex"
 
 syntax on
 
-set cc=80
+set cc=100
 
 " aspectJ
 au BufNewFile,BufRead *.aj set filetype=java
@@ -53,6 +55,10 @@ au BufNewFile,BufRead *.sbt set filetype=scala
 
 " JSON
 au BufNewFile, BufRead *.json set filetype=js
+
+" SML and other files
+au BufNewFile,BufRead *.sml,*.fun,*.mlb,*.sig set filetype=sml
+au BufNewFile,BufRead *.sml,*.fun,*.mlb,*.sig set foldmethod=indent
 
 execute pathogen#infect()
 filetype plugin on
@@ -78,6 +84,11 @@ endfun
 fun! DeDupWs()
   " de-duplicate white space
   execute "%!cat -s"
+endfun
+
+fun! ConqueShell()
+  :ConqueTerm zsh
+  set nonumber
 endfun
 
 " press f8 to open tagbar
