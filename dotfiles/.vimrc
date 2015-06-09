@@ -128,3 +128,13 @@ set laststatus=2
 
 autocmd BufRead,BufNewFile  *.fun set syntax=sml
 autocmd BufRead,BufNewFile  *.ll set syntax=llvm
+
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
