@@ -2,7 +2,13 @@
 
 set -e
 
+
+echo "Pulling submodules"
+git submodule init
+git submodule update
+
 echo "Installing files to: $HOME"
+
 
 cd dotfiles
 for file in $(ls -a)
