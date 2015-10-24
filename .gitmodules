@@ -7,3 +7,12 @@
 [submodule "dotfiles/.vim/bundle/vim-scala"]
   path = dotfiles/.vim/bundle/vim-scala
   url = https://github.com/derekwyatt/vim-scala.git
+[submodule "dotfiles/.vim/bundle/ctrlp.vim"]
+	path = dotfiles/.vim/bundle/ctrlp.vim
+	url = https://github.com/kien/ctrlp.vim.git
+[submodule "dotfiles/.vim/bundle/editorconfig"]
+	path = dotfiles/.vim/bundle/editorconfig
+	url = https://github.com/editorconfig/editorconfig-vim.git
+[submodule "dotfiles/.vim/bundle/vim-javascript"]
+	path = dotfiles/.vim/bundle/vim-javascript
+	url = https://github.com/pangloss/vim-javascript.git
