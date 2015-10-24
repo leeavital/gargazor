@@ -5,7 +5,7 @@ set -e
 
 echo "Pulling submodules"
 git submodule init
-git submodule update
+git submodule sync
 
 echo "Installing files to: $HOME"
 
