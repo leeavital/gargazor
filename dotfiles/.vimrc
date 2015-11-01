@@ -115,6 +115,9 @@ noremap tp  :tabprev<CR>
 noremap ts  :tab split<CR>
 
 " ignore stuff for ctrl-p
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class     " MacOSX/Linux
+
+" ignore stuff for ctrl-p
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\.git$\|\.yardoc\|public$|log\|tmp$',
   \ 'file': '\.so$\|\.dat$|\.DS_Store$'
