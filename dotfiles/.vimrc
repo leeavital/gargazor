@@ -23,6 +23,7 @@ set smartcase
 " menu for common commands in ex mode
 set wildmenu
 set wildmode=list:longest,full
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class
 
 set smarttab
 
