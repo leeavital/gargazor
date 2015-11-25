@@ -49,6 +49,9 @@ syntax on
 
 set cc=100
 
+" NERDTree
+autocmd vimenter * NERDTree
+
 " aspectJ
 au BufNewFile,BufRead *.aj set filetype=java
 
