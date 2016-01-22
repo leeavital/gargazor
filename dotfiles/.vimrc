@@ -49,8 +49,9 @@ syntax on
 
 set cc=100
 
-" NERDTree
+" NERDTree, then focus on the previous window
 autocmd vimenter * NERDTree
+autocmd vimenter * wincmd p
 
 " aspectJ
 au BufNewFile,BufRead *.aj set filetype=java
