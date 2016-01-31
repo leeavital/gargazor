@@ -65,6 +65,8 @@ au BufNewFile, BufRead *.json set filetype=js
 au BufNewFile,BufRead *.sml,*.fun,*.mlb,*.sig set filetype=sml
 au BufNewFile,BufRead *.sml,*.fun,*.mlb,*.sig set foldmethod=indent
 
+au BufNewFile,BufRead *.tsx set filetype=typescript
+
 execute pathogen#infect()
 filetype plugin on
 filetype plugin indent on
