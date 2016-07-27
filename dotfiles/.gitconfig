@@ -18,6 +18,7 @@
    st        = status
    wdiff     = diff --word-diff=plain
    authors   = log --format=format:%an 
+   recent    = branch --sort -authordate
 
 [push]
 	default = simple
