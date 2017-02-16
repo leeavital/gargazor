@@ -36,6 +36,7 @@ set hlsearch
 set nowrap
 
 set cursorline
+set cursorcolumn
 
 
 nore ; :
@@ -46,7 +47,7 @@ nore , ;
 let g:tex_flavor = "latex"
 
 syntax on
-
+syntax enable
 set cc=100
 
 " NERDTree, then focus on the previous window
@@ -149,3 +150,9 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:airline#extensions#tabline#enabled = 1
+
+set rtp+=/usr/local/opt/fzf
+set incsearch
+
+" make sure non-comments are spell-checked
+syntax spell toplevel
