@@ -23,3 +23,7 @@
 --regex-typescript=/^[ \t]*(export)?[ \t]*interface[ \t]+([a-zA-Z0-9_]+)/\2/i,interfaces/
 --regex-typescript=/^[ \t]*(export)?[ \t]*enum[ \t]+([a-zA-Z0-9_]+)/\2/e,enums/
 --regex-typescript=/^[ \t]*import[ \t]+([a-zA-Z0-9_]+)/\1/I,imports/
+
+--langdef=dlang
+--langmap=dlang:.d
+--regex-dlang=/[ \t]*(final)?[ \t]*(class|interface)[ \t]+([a-zA-Z0-9_]+)/\3/c,classes/

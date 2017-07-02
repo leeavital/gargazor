@@ -149,3 +149,10 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:airline#extensions#tabline#enabled = 1
+
+set rtp+=/usr/local/opt/fzf
+
+if filereadable("dub.sdl")
+  set makeprg=dub
+  set errorformat+=%f(%l,%c):\ %m
+endif
