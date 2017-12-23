@@ -37,6 +37,9 @@ set nowrap
 
 set cursorline
 
+" re-select after adjusting  indentation
+vmap < <gv
+vmap > >gv
 
 nore ; :
 nore , ;
@@ -155,4 +158,8 @@ set rtp+=/usr/local/opt/fzf
 if filereadable("dub.sdl")
   set makeprg=dub
   set errorformat+=%f(%l,%c):\ %m
+endif
+
+if filereadable("dub.json")
+  set makeprg=dub
 endif
