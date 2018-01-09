@@ -9,17 +9,11 @@ MAHPATH=$MANPATH:/usr/local/Cellar
 alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
 
+# new shells open up in zsh
+export SHELL=zsh
 
 set -o vi
 bindkey "^R" history-incremental-search-backward
-
-# alias mvn=/usr/local/Cellar/maven/3.1.1/bin/mvn
-#
-# alias mysql=/usr/local/Cellar/mysql/5.6.15/bin/mysql
-
-# drawbridge
-# export JAVA_HOME=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
-
 
 # so I can use ggrep :)
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH:/usr/local/Cellar

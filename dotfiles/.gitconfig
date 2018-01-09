@@ -23,7 +23,7 @@
 [push]
 	default = simple
 [pull]
-  rebase = true
+  rebase = false
 
 [diff]
     tool = default-difftool

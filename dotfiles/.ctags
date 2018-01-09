@@ -25,8 +25,14 @@
 --regex-typescript=/^[ \t]*(export)?[ \t]*enum[ \t]+([a-zA-Z0-9_]+)/\2/e,enums/
 --regex-typescript=/^[ \t]*import[ \t]+([a-zA-Z0-9_]+)/\1/I,imports/
 
+<<<<<<< HEAD
 --langdef=Go
 --langmap=Go:.go
 --regex-Go=/func([ \t]+\([^)]+\))?[ \t]+([a-zA-Z0-9_]+)/\2/d,func/
 --regex-Go=/var[ \t]+([a-zA-Z_][a-zA-Z0-9_]+)/\1/d,var/
 --regex-Go=/type[ \t]+([a-zA-Z_][a-zA-Z0-9_]+)/\1/d,type/
+
+--langdef=dlang
+--langmap=dlang:.d
+--regex-dlang=/[ \t]*(final)?[ \t]*(class|interface)[ \t]+([a-zA-Z0-9_]+)/\3/c,classes/
+--regex-dlang=/[ \t]*(private|public|static|auto|final|const[ \t])*([a-zA-Z0-9_\.\*]*[ \t])([a-zA-Z0-9_]+)[ \s]*\(.*/\3/m,members/

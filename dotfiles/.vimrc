@@ -38,6 +38,9 @@ set nowrap
 set cursorline
 set cursorcolumn
 
+" re-select after adjusting  indentation
+vmap < <gv
+vmap > >gv
 
 nore ; :
 nore , ;
@@ -156,3 +159,12 @@ set incsearch
 
 " make sure non-comments are spell-checked
 syntax spell toplevel
+
+if filereadable("dub.sdl")
+  set makeprg=dub
+  set errorformat+=%f(%l,%c):\ %m
+endif
+
+if filereadable("dub.json")
+  set makeprg=dub
+endif
