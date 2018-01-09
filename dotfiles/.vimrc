@@ -160,6 +160,12 @@ set incsearch
 " make sure non-comments are spell-checked
 syntax spell toplevel
 
+if filereadable("build.gradle")
+  set makeprg=./gradlew\ --parallel\ --daemon
+elseif filereadable("godelw")
+  set makeprg=./godelw
+endif
+
 if filereadable("dub.sdl")
   set makeprg=dub
   set errorformat+=%f(%l,%c):\ %m
