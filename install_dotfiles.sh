@@ -13,6 +13,8 @@ fi
 
 echo "Installing files to: $HOME"
 
+rm -rf ~/.vim
+
 cd dotfiles
 for file in $(ls -a)
 do
