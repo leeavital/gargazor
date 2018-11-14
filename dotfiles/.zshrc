@@ -130,3 +130,5 @@ function markdown()
 {
   pandoc -s -f markdown -t html "${1}" | sed 's/^<pre class/<p><\/p><pre class/' | lynx -stdin
 }
+
+alias k='kubectl '

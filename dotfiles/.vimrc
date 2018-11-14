@@ -174,3 +174,7 @@ endif
 if filereadable("dub.json")
   set makeprg=dub
 endif
+
+if filereadable("Rakefile")
+  set makeprg="rake"
+endif
