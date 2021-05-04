@@ -54,8 +54,8 @@ syntax enable
 set cc=100
 
 " NERDTree, then focus on the previous window
-autocmd vimenter * NERDTree
-autocmd vimenter * wincmd p
+" autocmd vimenter * NERDTree
+" autocmd vimenter * wincmd p
 
 " aspectJ
 au BufNewFile,BufRead *.aj set filetype=java
@@ -176,5 +176,6 @@ if filereadable("dub.json")
 endif
 
 if filereadable("Rakefile")
-  set makeprg="rake"
+  set makeprg=rake
 endif
+set runtimepath^=~/.vim/bundle/ag

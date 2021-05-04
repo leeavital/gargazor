@@ -37,12 +37,23 @@ function prompt_char {
          echo ""
          ;;
       *)
-         echo "on $fg[blue]$br$reset_color"
+         echo "on $fg[yellow]$br$reset_color"
          ;;
    esac
    return
 }
 
+function kctx {
+  ctx=$(kubectl config view -o jsonpath="{.current-context}")
+  ns=$(kubectl config view -o jsonpath="{.contexts[?(@.name == \"$ctx\")].context.namespace}")
+  case "$ctx" in
+    "")
+      ;;
+    *)
+      echo "$fg[yellow]($ctx/$ns)$reset_color"
+      ;;
+  esac
+}
 function nice_pwd {
  # pwd | sed 's/\([a-z]\)[a-z]*\//\1\//gi'
  pwd | sed 's/\([^\\/]\)[^\\/]*\//\1\//gi'
@@ -68,8 +79,12 @@ setopt prompt_subst
 
 
 
+line2 () {
+  printf "$(k8s-prompt2)"
+}
+
 PS1='$fg[green]%n$reset_color at $fg[red]%m $reset_color %U%B(%d)%b%u $(prompt_char)
-$ '
+$(k8s-prompt2) $ '
 
 
 # PROMPT="$fg[green]%n$reset_color at $fg[red]%m $reset_color %U%B(${nice_pwd})%b%u 
@@ -132,3 +147,6 @@ function markdown()
 }
 
 alias k='kubectl '
+
+export PATH=$PATH:$HOME/bin
+alias watch='watch '
