@@ -29,6 +29,11 @@ function ads_ssh() { ssh -i ~/.ssh/key-adsymp adsymp@"$1"; }
 
 unsetopt beep
 
+if [[ $(uname) == "Darwin" ]]
+then
+  eval $(/opt/homebrew/bin/brew shellenv)
+fi
+
 
 function prompt_char {
    br=`git branch >/dev/null 2>/dev/null && git branch | grep "\*.*" | sed -e 's/^..//' && return`
@@ -85,6 +90,9 @@ line2 () {
 
 PS1='$fg[green]%n$reset_color at $fg[red]%m $reset_color %U%B(%d)%b%u $(prompt_char)
 $(k8s-prompt2) $ '
+# $(k8s-prompt2) $ '
+
+PS1='$(/Users/lee.avital/bin/prompt)'
 
 
 # PROMPT="$fg[green]%n$reset_color at $fg[red]%m $reset_color %U%B(${nice_pwd})%b%u 

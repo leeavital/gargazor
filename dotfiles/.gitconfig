@@ -30,3 +30,6 @@
 [difftool "default-difftool"]
   prompt = false
   cmd = "vim -f '+execute \"DirDiff\" argv(0) argv(1)"' $LOCAL $REMOTE
+
+[url "ssh://git@github.com/"]
+    insteadOf = https://github.com/

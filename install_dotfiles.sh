@@ -32,9 +32,9 @@ done
 
 # symlinks for neovim
 echo "Symlinking neovim config"
-ln -sf ~/.vim ~/.nvim
-ln -sf ~/.vimrc ~/.nvimrc
-ln ~/.vimrc ~/.config/nvim/init.vim
+mkdir -p ~/.config/nvim
+ln -sf ~/.vim/* ~/.config/nvim
+ln -sf ~/.vimrc ~/.config/nvim/init.vim
 
 echo "restoring machine specific git config"
 git config --global user.email "$old_git_email"
