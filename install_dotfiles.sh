@@ -7,7 +7,7 @@ git submodule init
 git submodule sync
 
 old_git_email=$(git config --global user.email)
-if (( $? != )); then
+if [[ -z "$?" ]]; then
   old_git_email=leeavital@gmail.com
 fi
 
@@ -34,6 +34,8 @@ done
 echo "Symlinking neovim config"
 ln -sf ~/.vim ~/.nvim
 ln -sf ~/.vimrc ~/.nvimrc
+ln ~/.vimrc ~/.config/nvim/init.vim
 
 echo "restoring machine specific git config"
 git config --global user.email "$old_git_email"
+
