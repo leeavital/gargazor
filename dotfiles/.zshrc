@@ -17,7 +17,7 @@ bindkey "^R" history-incremental-search-backward
 
 # so I can use ggrep :)
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH:/usr/local/Cellar
-export PATH=$PATH:/Users/lee/bin
+export PATH=$PATH:/Users/lee.avital/bin
 
 
 export SBT_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=4000,server=y,suspend=n"

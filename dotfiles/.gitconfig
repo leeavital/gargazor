@@ -30,6 +30,3 @@
 [difftool "default-difftool"]
   prompt = false
   cmd = "vim -f '+execute \"DirDiff\" argv(0) argv(1)"' $LOCAL $REMOTE
-
-[remote "origin"]
-  fetch = +refs/heads/*:refs/remotes/origin/*
