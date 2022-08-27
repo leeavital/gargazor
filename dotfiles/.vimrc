@@ -154,7 +154,6 @@ let g:syntastic_check_on_wq = 0
 
 let g:airline#extensions#tabline#enabled = 1
 
-set rtp+=/usr/local/opt/fzf
 set incsearch
 
 " make sure non-comments are spell-checked
@@ -178,4 +177,3 @@ endif
 if filereadable("Rakefile")
   set makeprg=rake
 endif
-set runtimepath^=~/.vim/bundle/ag
