@@ -177,3 +177,13 @@ endif
 if filereadable("Rakefile")
   set makeprg=rake
 endif
+
+
+
+function DailyNote()
+  execute "normal G"
+  execute "r !date"
+  let line = line("$")
+  call append(line, "-------------------------------")
+endfunction
+command DailyNote call DailyNote()
