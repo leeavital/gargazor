@@ -17,6 +17,13 @@ async def main():
             CargoBinstallInstaller(),
             RustInstaller(),
             BrewRecipeInstaller("jj"),
+            StandardInstaller(
+                    command = "autojump",
+                    install_cmd  = "brew install autojump",
+                    profile_additions = [
+                        """[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh""" 
+                    ],
+            )
     ]
 
     for i in installers:
@@ -51,19 +58,48 @@ class InstallError(Exception):
         self.msg = msg
 
 
+
+class StandardInstaller(Installer):
+
+    def __init__(
+            self,
+            command,
+            install_cmd,
+            profile_additions = None,
+    ):
+        self.command = command
+        self.install_cmd = install_cmd
+        self.profile_additions = profile_additions
+
+
+    def name(self) -> str:
+        return self.command
+
+    async def is_installed(self):
+        return await is_installed(self.command)
+
+    async def install(self):
+        await run_command(["zsh", "-c", "source ~/.zprofile; " + self.install_cmd])
+
+        if len(self.profile_additions) > 0:
+            await add_block(self.command, "\n".join(self.profile_additions), zprofile_path())
+
+
+
+
 class BrewRecipeInstaller(Installer):
 
     def __init__(self, name):
         self._name = name
 
     async def is_installed(self) -> bool:
-        return await is_installed("jj")
+        return await is_installed(self._name)
 
     def name(self) -> str:
         return "brew " + self._name
 
     async def install(self):
-        await run_command(["brew", "install", self.name])
+        await run_command(["brew", "install", self._name])
 
 class CargoBinstallInstaller(Installer):
 

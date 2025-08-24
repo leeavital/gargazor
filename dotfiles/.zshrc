@@ -90,6 +90,13 @@ function markdown()
 }
 
 alias k='kubectl '
-
 export PATH=$PATH:$HOME/bin
 alias watch='watch '
+# export PS1="$(lees-prompt)"
+
+
+
+source ~/.zprofile
+
+EDITOR=vim
+
