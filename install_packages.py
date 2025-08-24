@@ -16,10 +16,14 @@ async def main():
             NVMInstaller(),
             CargoBinstallInstaller(),
             RustInstaller(),
-            JJInstaller(),
+            BrewRecipeInstaller("jj"),
     ]
 
     for i in installers:
+        if await i.is_installed():
+            console.log(f"[bold green]{i.name()} is already installed[/bold green]")
+            continue
+
         with console.status(f"[bold green]installing {i.name()}[/bold green]"):
             try:
                 await i.install()
@@ -47,18 +51,16 @@ class InstallError(Exception):
         self.msg = msg
 
 
-
-
 class BrewRecipeInstaller(Installer):
 
     def __init__(self, name):
-        self.name = name
+        self._name = name
 
     async def is_installed(self) -> bool:
-        pass
+        return await is_installed("jj")
 
-    def name(self):
-        return "brew " + self.name
+    def name(self) -> str:
+        return "brew " + self._name
 
     async def install(self):
         await run_command(["brew", "install", self.name])
@@ -66,7 +68,7 @@ class BrewRecipeInstaller(Installer):
 class CargoBinstallInstaller(Installer):
 
     async def is_installed(self) -> bool:
-        pass
+        return await is_installed("cargo-binstall")
 
     def name(self):
         return "cargo-binstall"
@@ -84,7 +86,7 @@ class NVMInstaller(Installer):
     def name(self) -> str:
         return "nvm"
     async def is_installed(self):
-        pass
+        return await is_installed("nvm")
     async def install(self):
         out = await run_command(["bash", "-c", "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash"])
 
@@ -101,7 +103,7 @@ class RustInstaller(Installer):
     def name(self) -> str:
         return "rustc"
     async def is_installed(self):
-        pass
+        return await is_installed("rustc")
     async def install(self):
         out = await run_command(["zsh", "-c", "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y"])
 
@@ -111,15 +113,13 @@ class RustInstaller(Installer):
         await add_block("rustup", contents, zprofile_path())
 
 
-class JJInstaller(Installer):
-    def name(self) -> str:
-        return "jj"
 
-    async def is_installed(self):
-        pass
 
-    async def install(self):
-        out = await run_command(["zsh", "-c", "source ~/.zprofile; brew install jj"])
+async def is_installed(cmd):
+    check = f"source ~/.zprofile; which {cmd}"
+    proc = await asyncio.create_subprocess_exec("bash", "-c", check, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    await proc.communicate()
+    return proc.returncode == 0
 
 
 async def run_command(parts):
