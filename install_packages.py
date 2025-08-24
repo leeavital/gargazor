@@ -1,0 +1,167 @@
+#!/usr/bin/env python3
+
+import asyncio
+import subprocess
+import aiofiles
+import os
+from pathlib import Path
+from rich.console import Console
+
+async def main():
+
+    console = Console()
+
+    # await DMGInstaller("VSCode", "https://code.visualstudio.com/sha/download?build=stable&os=darwin-universal").install()
+    installers = [
+            NVMInstaller(),
+            CargoBinstallInstaller(),
+            RustInstaller(),
+            JJInstaller(),
+    ]
+
+    for i in installers:
+        with console.status(f"[bold green]installing {i.name()}[/bold green]"):
+            try:
+                await i.install()
+                console.log(f"[bold green]installed {i.name()}![/bold green]")
+            except InstallError as e:
+                console.log(f"[bold red]could not install {i.name()}[/bold red]")
+                console.log(f"[italic red]{e.msg}[/italic red]")
+
+class Installer:
+    async def is_installed(self) -> bool:
+        pass
+
+    def name(self) -> str:
+        """the name of the installer"""
+        pass
+
+    async def install(self):
+        """may throw an InstallError"""
+        pass
+
+
+class InstallError(Exception):
+    def __init__(self, msg):
+        super().__init__(self)
+        self.msg = msg
+
+
+
+
+class BrewRecipeInstaller(Installer):
+
+    def __init__(self, name):
+        self.name = name
+
+    async def is_installed(self) -> bool:
+        pass
+
+    def name(self):
+        return "brew " + self.name
+
+    async def install(self):
+        await run_command(["brew", "install", self.name])
+
+class CargoBinstallInstaller(Installer):
+
+    async def is_installed(self) -> bool:
+        pass
+
+    def name(self):
+        return "cargo-binstall"
+
+    async def install(self):
+        out = await run_command(["brew", "install", "cargo-binstall"])
+        print(out)
+        contents = """
+        . "$HOME/.cargo/env"
+        """
+        await add_block("cargo-install", contents, zprofile_path())
+
+
+class NVMInstaller(Installer):
+    def name(self) -> str:
+        return "nvm"
+    async def is_installed(self):
+        pass
+    async def install(self):
+        out = await run_command(["bash", "-c", "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash"])
+
+        content = """
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion"""
+        await add_block("nvm", content, zprofile_path())
+
+
+        out = await run_command(["zsh", "-c", "source ~/.zprofile; nvm install --lts"])
+
+class RustInstaller(Installer):
+    def name(self) -> str:
+        return "rustc"
+    async def is_installed(self):
+        pass
+    async def install(self):
+        out = await run_command(["zsh", "-c", "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y"])
+
+        contents = """
+        . "$HOME/.cargo/env"
+        """
+        await add_block("rustup", contents, zprofile_path())
+
+
+class JJInstaller(Installer):
+    def name(self) -> str:
+        return "jj"
+
+    async def is_installed(self):
+        pass
+
+    async def install(self):
+        out = await run_command(["zsh", "-c", "source ~/.zprofile; brew install jj"])
+
+
+async def run_command(parts):
+    (r, w) = os.pipe()
+
+    async with aiofiles.open(w, mode='w') as interleaved:
+        proc = await asyncio.create_subprocess_exec(*parts, stdin=subprocess.PIPE, stdout=interleaved, stderr=interleaved)
+    stdout, stderr = await proc.communicate()
+    if proc.returncode != 0:
+        async with aiofiles.open(r, mode='r') as interleaved:
+            stderr = "".join([l for l in await interleaved.readlines()])
+            raise InstallError(stderr)
+    return stdout
+
+
+async def add_block(slug, target_content, filename="~/.zprofile"):
+    async with aiofiles.open(filename, mode='r') as f:
+        contents = (await f.read()).split("\n")
+
+    start = "###### BEGIN " + slug + " #######"
+    end = "###### END " + slug + " #######"
+
+    try:
+        startIndex = contents.index(start)
+        endIndex = contents.index(end)
+    except ValueError:
+        startIndex = None
+        endIndex = None
+
+
+    if startIndex == None:
+        contents.extend([start, target_content, end])
+    else:
+        contents = contents[0:startIndex + 1] + [target_content] + contents[endIndex:]
+
+    new_contents = "\n".join(contents)
+
+    async with aiofiles.open(filename, mode='w') as f:
+        await f.write(new_contents)
+
+
+def zprofile_path():
+    return Path.home().joinpath(".zprofile")
+
+asyncio.run(main())
