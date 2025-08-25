@@ -41,15 +41,15 @@ async def main():
 
 class Installer:
     async def is_installed(self) -> bool:
-        pass
+        raise Exception("not implemented")
 
     def name(self) -> str:
         """the name of the installer"""
-        pass
+        raise Exception("not implemented")
 
     async def install(self):
         """may throw an InstallError"""
-        pass
+        raise Exception("not implemented")
 
 
 class InstallError(Exception):

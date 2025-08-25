@@ -1,5 +1,10 @@
 aiofiles==24.1.0
 markdown-it-py==3.0.0
 mdurl==0.1.2
+mypy==1.17.1
+mypy_extensions==1.1.0
+pathspec==0.12.1
 Pygments==2.19.2
 rich==14.1.0
+tomli==2.2.1
+typing_extensions==4.15.0
