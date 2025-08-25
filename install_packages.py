@@ -122,7 +122,8 @@ class NVMInstaller(Installer):
     def name(self) -> str:
         return "nvm"
     async def is_installed(self):
-        return await is_installed("nvm")
+        check_file = Path.home().joinpath(".nvm/nvm.sh")
+        return await file_exists(check_file)
     async def install(self):
         out = await run_command(["bash", "-c", "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash"])
 
@@ -195,6 +196,10 @@ async def add_block(slug, target_content, filename="~/.zprofile"):
 
     async with aiofiles.open(filename, mode='w') as f:
         await f.write(new_contents)
+
+async def file_exists(path):
+    import aiofiles.os
+    return await aiofiles.os.path.exists(path)
 
 
 def zprofile_path():
