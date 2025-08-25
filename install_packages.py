@@ -81,25 +81,17 @@ class StandardInstaller(Installer):
     async def install(self):
         await run_command(["zsh", "-c", "source ~/.zprofile; " + self.install_cmd])
 
-        if len(self.profile_additions) > 0:
+        if self.profile_additions != None and len(self.profile_additions) > 0:
             await add_block(self.command, "\n".join(self.profile_additions), zprofile_path())
 
 
-
-
-class BrewRecipeInstaller(Installer):
+class BrewRecipeInstaller(StandardInstaller):
 
     def __init__(self, name):
-        self._name = name
-
-    async def is_installed(self) -> bool:
-        return await is_installed(self._name)
-
-    def name(self) -> str:
-        return "brew " + self._name
-
-    async def install(self):
-        await run_command(["brew", "install", self._name])
+        super().__init__(
+                command = name,
+                install_cmd = "brew install " + name,
+        )
 
 class CargoBinstallInstaller(Installer):
 
