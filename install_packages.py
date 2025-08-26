@@ -17,13 +17,18 @@ async def main():
             CargoBinstallInstaller(),
             RustInstaller(),
             BrewRecipeInstaller("jj"),
+            BrewRecipeInstaller("ansible"),
             StandardInstaller(
                     command = "autojump",
                     install_cmd  = "brew install autojump",
                     profile_additions = [
                         """[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh""" 
                     ],
-            )
+            ),
+            StandardInstaller(
+                command = "uv",
+                install_cmd = "curl -LsSf https://astral.sh/uv/install.sh | sh",
+            ),
     ]
 
     for i in installers:
