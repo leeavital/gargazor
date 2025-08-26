@@ -29,6 +29,13 @@ async def main():
                 command = "uv",
                 install_cmd = "curl -LsSf https://astral.sh/uv/install.sh | sh",
             ),
+            StandardInstaller(
+                command = "gimme",
+                install_cmd = "curl -sL -o ~/bin/gimme https://raw.githubusercontent.com/travis-ci/gimme/master/gimme; chmod +x ~/bin/gimme; gimme 1.24.0",
+                profile_additions = [
+                    """source ~/.gimme/envs/latest.env"""
+                ]
+            ),
     ]
 
     for i in installers:
