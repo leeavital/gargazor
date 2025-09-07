@@ -25,17 +25,17 @@ async def main():
                         """[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh""" 
                     ],
             ),
-            StandardInstaller(
-                command = "uv",
+            StandardInstaller( command = "uv",
                 install_cmd = "curl -LsSf https://astral.sh/uv/install.sh | sh",
             ),
             StandardInstaller(
                 command = "gimme",
-                install_cmd = "curl -sL -o ~/bin/gimme https://raw.githubusercontent.com/travis-ci/gimme/master/gimme; chmod +x ~/bin/gimme; gimme 1.24.0",
+                install_cmd = "mkdir -p ~/bin; curl -sL -o ~/bin/gimme https://raw.githubusercontent.com/travis-ci/gimme/master/gimme; chmod +x ~/bin/gimme; gimme 1.24.0",
                 profile_additions = [
                     """source ~/.gimme/envs/latest.env"""
                 ]
             ),
+            PromptInstaller(),
     ]
 
     for i in installers:
@@ -152,6 +152,20 @@ class RustInstaller(Installer):
         . "$HOME/.cargo/env"
         """
         await add_block("rustup", contents, zprofile_path())
+
+
+class PromptInstaller(Installer):
+    def name(self) -> str:
+        return "custom prompt"
+    async def is_installed(self):
+        return False # TODO
+
+    async def install(self):
+        await run_command(["zsh", "-c", "mkdir -p ~/code; cd ~/code; git clone git@github.com:leeavital/lees-prompt.git"])
+        await run_command(["zsh", "-c", "cd ~/code/lees-prompt; cargo build"])
+        await run_command(["zsh", "-c", "mv  ~/code/lees-prompt/target/debug/prompt ~/bin/prompt"])
+
+
 
 
 
