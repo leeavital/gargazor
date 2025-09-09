@@ -17,7 +17,9 @@ async def main():
             CargoBinstallInstaller(),
             RustInstaller(),
             BrewRecipeInstaller("jj"),
+            BrewRecipeInstaller("gh"),
             BrewRecipeInstaller("ansible"),
+            BrewRecipeInstaller("neovim", command="nvim"),
             StandardInstaller(
                     command = "autojump",
                     install_cmd  = "brew install autojump",
@@ -99,10 +101,11 @@ class StandardInstaller(Installer):
 
 class BrewRecipeInstaller(StandardInstaller):
 
-    def __init__(self, name):
+    def __init__(self, recipe_name, command = None):
+        command = command if command != None else recipe_name
         super().__init__(
-                command = name,
-                install_cmd = "brew install " + name,
+                command = command,
+                install_cmd = "brew install " + recipe_name,
         )
 
 class CargoBinstallInstaller(Installer):
@@ -161,7 +164,7 @@ class PromptInstaller(Installer):
         return False # TODO
 
     async def install(self):
-        await run_command(["zsh", "-c", "mkdir -p ~/code; cd ~/code; git clone git@github.com:leeavital/lees-prompt.git"])
+        await git_clone("git@github.com:leeavital/lees-prompt.git", Path.home().joinpath("code").joinpath("lees-prompt"))
         await run_command(["zsh", "-c", "cd ~/code/lees-prompt; cargo build"])
         await run_command(["zsh", "-c", "mv  ~/code/lees-prompt/target/debug/prompt ~/bin/prompt"])
 
@@ -188,6 +191,16 @@ async def run_command(parts):
             stderr = "".join([l for l in await interleaved.readlines()])
             raise InstallError(stderr)
     return stdout
+
+async def git_clone(git_path, where: Path):
+    if await directory_exists(where):
+        return
+
+    import aiofiles.os
+    await aiofiles.os.mkdir(where)
+    await run_command(["zsh", "-c", f"cd {where}; git clone {git_path} ."])
+
+
 
 
 async def add_block(slug, target_content, filename="~/.zprofile"):
@@ -218,6 +231,14 @@ async def add_block(slug, target_content, filename="~/.zprofile"):
 async def file_exists(path):
     import aiofiles.os
     return await aiofiles.os.path.exists(path)
+
+async def directory_exists(path: Path) -> bool:
+    import aiofiles.os
+    return await aiofiles.os.path.isdir(path)
+
+
+
+
 
 
 def zprofile_path():
