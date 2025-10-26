@@ -17,7 +17,9 @@ async def main():
             CargoBinstallInstaller(),
             RustInstaller(),
             BrewRecipeInstaller("jj"),
+            BrewRecipeInstaller("the_silver_searcher", command="ag"),
             BrewRecipeInstaller("gh"),
+            BrewRecipeInstaller("fzf"),
             BrewRecipeInstaller("ansible"),
             BrewRecipeInstaller("neovim", command="nvim"),
             StandardInstaller(
@@ -31,11 +33,25 @@ async def main():
                 install_cmd = "curl -LsSf https://astral.sh/uv/install.sh | sh",
             ),
             StandardInstaller(
+                command = "java", # TODO: on mac you get a stub thing
+                install_cmd = "brew install openjdk@21",
+                profile_additions = [
+                    """export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"'"""
+                ]
+            ),
+            StandardInstaller(
                 command = "gimme",
                 install_cmd = "mkdir -p ~/bin; curl -sL -o ~/bin/gimme https://raw.githubusercontent.com/travis-ci/gimme/master/gimme; chmod +x ~/bin/gimme; gimme 1.24.0",
                 profile_additions = [
                     """source ~/.gimme/envs/latest.env"""
                 ]
+            ),
+            StandardInstaller(
+                command = "sdk",
+                install_cmd = """curl -s "https://get.sdkman.io" | bash""",
+                profile_additions = [
+                    """source "$HOME/.sdkman/bin/sdkman-init.sh" """,
+                ],
             ),
             PromptInstaller(),
     ]
@@ -139,7 +155,6 @@ class NVMInstaller(Installer):
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
         [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion"""
         await add_block("nvm", content, zprofile_path())
-
 
         out = await run_command(["zsh", "-c", "source ~/.zprofile; nvm install --lts"])
 
