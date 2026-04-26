@@ -1,41 +1,6 @@
-[submodule "dotfiles/.vim/bundle/typescript-vim"]
-	path = dotfiles/.vim/bundle/typescript-vim
-	url = https://github.com/leafgarland/typescript-vim
-[submodule "dotfiles/.vim/bundle/vim-fugitive"]
-	path = dotfiles/.vim/bundle/vim-fugitive
-	url = git@github.com:tpope/vim-fugitive.git
-[submodule "dotfiles/.vim/bundle/vim-scala"]
-  path = dotfiles/.vim/bundle/vim-scala
-  url = https://github.com/derekwyatt/vim-scala.git
-[submodule "dotfiles/.vim/bundle/ctrlp.vim"]
-	path = dotfiles/.vim/bundle/ctrlp.vim
-	url = https://github.com/kien/ctrlp.vim.git
-[submodule "dotfiles/.vim/bundle/editorconfig"]
-	path = dotfiles/.vim/bundle/editorconfig
-	url = https://github.com/editorconfig/editorconfig-vim.git
-[submodule "dotfiles/.vim/bundle/vim-javascript"]
-	path = dotfiles/.vim/bundle/vim-javascript
-	url = https://github.com/pangloss/vim-javascript.git
-[submodule "dotfiles/.vim/bundle/delimitMate"]
-	path = dotfiles/.vim/bundle/delimitMate
-	url = https://github.com/Raimondi/delimitMate.git
-[submodule "dotfiles/.vim/bundle/nerdtree"]
-	path = dotfiles/.vim/bundle/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
-[submodule "dotfiles/.vim/bundle/vim-dirdiff"]
-	path = dotfiles/.vim/bundle/vim-dirdiff
-	url = git://github.com/will133/vim-dirdiff
-[submodule "dotfiles/.vim/bundle/vim-go"]
-	path = dotfiles/.vim/bundle/vim-go
-	url = https://github.com/fatih/vim-go.git
 [submodule "dotfiles/vim-fugitive"]
 	path = dotfiles/vim-fugitive
 	url = git@github.com:tpope/vim-fugitive.git
-[submodule "dotfiles/.vim/bundle/editorconfig-vim"]
-	path = dotfiles/.vim/bundle/editorconfig-vim
-  url = git@github.com:editorconfig/editorconfig-vim.git
-[submodule "dotfiles/.vim/bundle/typescript-vim"]
-	path = dotfiles/.vim/bundle/typescript-vim
-  url = git@github.com:leafgarland/typescript-vim.git
-
-
+[submodule "plugins/vim-plug"]
+	path = plugins/vim-plug
+	url = https://github.com/junegunn/vim-plug.git

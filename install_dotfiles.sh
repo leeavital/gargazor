@@ -15,7 +15,9 @@ echo "Installing files to: $HOME"
 
 rm -rf ~/.vim
 
-cd dotfiles
+
+
+pushd dotfiles
 for file in $(ls -a)
 do
    if [ -f $file ]
@@ -29,12 +31,17 @@ do
 
 done
 
+popd
+
+mkdir -p ~/.config/nvim/autoload 
+cp plugins/vim-plug/plug.vim  ~/.config/nvim/autoload/
+
 
 # symlinks for neovim
-echo "Symlinking neovim config"
-mkdir -p ~/.config/nvim
-ln -sf ~/.vim/* ~/.config/nvim
-ln -sf ~/.vimrc ~/.config/nvim/init.vim
+# echo "Symlinking neovim config"
+# mkdir -p ~/.config/nvim
+# ln -sf ~/.vim/* ~/.config/nvim
+# ln -sf ~/.vimrc ~/.config/nvim/init.vim
 
 echo "restoring machine specific git config"
 git config --global user.email "$old_git_email"

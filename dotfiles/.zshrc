@@ -98,5 +98,7 @@ alias watch='watch '
 
 source ~/.zprofile
 
-EDITOR=vim
+export EDITOR=vim
 
+
+alias vim=nvim

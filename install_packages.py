@@ -17,7 +17,11 @@ async def main():
             CargoBinstallInstaller(),
             RustInstaller(),
             BrewRecipeInstaller("jj"),
+            BrewRecipeInstaller("the_silver_searcher", command="ag"),
+            BrewRecipeInstaller("gh"),
+            BrewRecipeInstaller("fzf"),
             BrewRecipeInstaller("ansible"),
+            BrewRecipeInstaller("neovim", command="nvim"),
             StandardInstaller(
                     command = "autojump",
                     install_cmd  = "brew install autojump",
@@ -29,11 +33,25 @@ async def main():
                 install_cmd = "curl -LsSf https://astral.sh/uv/install.sh | sh",
             ),
             StandardInstaller(
+                command = "java", # TODO: on mac you get a stub thing
+                install_cmd = "brew install openjdk@21",
+                profile_additions = [
+                    """export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"'"""
+                ]
+            ),
+            StandardInstaller(
                 command = "gimme",
                 install_cmd = "mkdir -p ~/bin; curl -sL -o ~/bin/gimme https://raw.githubusercontent.com/travis-ci/gimme/master/gimme; chmod +x ~/bin/gimme; gimme 1.24.0",
                 profile_additions = [
                     """source ~/.gimme/envs/latest.env"""
                 ]
+            ),
+            StandardInstaller(
+                command = "sdk",
+                install_cmd = """curl -s "https://get.sdkman.io" | bash""",
+                profile_additions = [
+                    """source "$HOME/.sdkman/bin/sdkman-init.sh" """,
+                ],
             ),
             PromptInstaller(),
     ]
@@ -99,10 +117,11 @@ class StandardInstaller(Installer):
 
 class BrewRecipeInstaller(StandardInstaller):
 
-    def __init__(self, name):
+    def __init__(self, recipe_name, command = None):
+        command = command if command != None else recipe_name
         super().__init__(
-                command = name,
-                install_cmd = "brew install " + name,
+                command = command,
+                install_cmd = "brew install " + recipe_name,
         )
 
 class CargoBinstallInstaller(Installer):
@@ -137,7 +156,6 @@ class NVMInstaller(Installer):
         [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion"""
         await add_block("nvm", content, zprofile_path())
 
-
         out = await run_command(["zsh", "-c", "source ~/.zprofile; nvm install --lts"])
 
 class RustInstaller(Installer):
@@ -161,7 +179,7 @@ class PromptInstaller(Installer):
         return False # TODO
 
     async def install(self):
-        await run_command(["zsh", "-c", "mkdir -p ~/code; cd ~/code; git clone git@github.com:leeavital/lees-prompt.git"])
+        await git_clone("git@github.com:leeavital/lees-prompt.git", Path.home().joinpath("code").joinpath("lees-prompt"))
         await run_command(["zsh", "-c", "cd ~/code/lees-prompt; cargo build"])
         await run_command(["zsh", "-c", "mv  ~/code/lees-prompt/target/debug/prompt ~/bin/prompt"])
 
@@ -188,6 +206,16 @@ async def run_command(parts):
             stderr = "".join([l for l in await interleaved.readlines()])
             raise InstallError(stderr)
     return stdout
+
+async def git_clone(git_path, where: Path):
+    if await directory_exists(where):
+        return
+
+    import aiofiles.os
+    await aiofiles.os.mkdir(where)
+    await run_command(["zsh", "-c", f"cd {where}; git clone {git_path} ."])
+
+
 
 
 async def add_block(slug, target_content, filename="~/.zprofile"):
@@ -218,6 +246,14 @@ async def add_block(slug, target_content, filename="~/.zprofile"):
 async def file_exists(path):
     import aiofiles.os
     return await aiofiles.os.path.exists(path)
+
+async def directory_exists(path: Path) -> bool:
+    import aiofiles.os
+    return await aiofiles.os.path.isdir(path)
+
+
+
+
 
 
 def zprofile_path():
